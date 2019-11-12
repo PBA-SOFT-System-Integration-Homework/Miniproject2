@@ -12,18 +12,20 @@ function createResponseQueue(userInput) {
         connection.createChannel(function (error1, channel) {
             if (error1) throw error1;
 
-            const response_queue = 'car_list_response';
+            let response_queue = '';
 
             channel.assertQueue('', {
-                exclusive: true
-            });
+                exclusive: true,
+            }, (err, ok) => {
+                response_queue = ok.queue
 
-            channel.sendToQueue('car_list_request', Buffer.from(userInput), {
-                replyTo: response_queue
-            });
-            channel.consume(response_queue, (msg) => {
-                cars = JSON.parse(msg.content.toString());
-                channel.ack(msg)
+                channel.sendToQueue('car_list_request', Buffer.from(userInput), {
+                    replyTo: response_queue
+                });
+                channel.consume(response_queue, (msg) => {
+                    cars = JSON.parse(msg.content.toString());
+                    channel.ack(msg)
+                });
             });
         });
     });
@@ -50,7 +52,11 @@ function main() {
             const filter = { make: answer.make, year: answer.year };
             createResponseQueue(JSON.stringify(filter));
             setTimeout(() => {
-                console.log(cars)
+                if (cars.length === 0) {
+                    console.log('No car of this type available, Goodbye!');
+                    process.exit(1);
+                }
+                cars.forEach(c => console.log(`ID: ${c.id} Make: ${c.make} Year: ${c.year} Model: ${c.model} `))
                 askForID();
             }, 1000);
         })
@@ -83,14 +89,14 @@ function askForID() {
             bookCar(booking);
             console.log('Sent for approval to carrental');
             console.log('Thank you come again');
+            console.log('Press Ctrl+C to terminate')
         })
 }
 
 function bookCar(booking) {
     const q = 'car_bookings';
 
-    require('amqplib/callback_api')
-        .connect('amqp://mathiasbigler.com:5672', function (err, conn) {
+        amqp.connect('amqp://mathiasbigler.com:5672', function (err, conn) {
             if (err) console.log(err);
 
             conn.createChannel(on_open);
@@ -99,7 +105,6 @@ function bookCar(booking) {
                 if (err1) console.log(err1);
                 ch.assertQueue(q);
                 let msg = JSON.stringify(booking);
-
                 ch.sendToQueue(q, Buffer.from(msg));
             }
         });
