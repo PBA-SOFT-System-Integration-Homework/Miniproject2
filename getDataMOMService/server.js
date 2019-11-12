@@ -25,8 +25,6 @@ amqp.connect('amqp://mathiasbigler.com:5672', function (error, connection) {
                 .then(res => res.text())
                 .then(text => {
                     const formattedList = convertTxtContentToArray(text);
-
-                    console.log(formattedList);
                     carList = carList.concat(formattedList);
                 })
             carList = carList.filter(c => c.make === filter.make && c.year >= filter.year);
