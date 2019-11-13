@@ -40,7 +40,7 @@ The general idea behind the process is that a user can define a search criteria 
 * The user chooses from returned list, enters booking details, and sends car booking request.
 * Car rental company (Or Mathias Bigler) accepts booking.
 
-![Business Process Management Notation image](MiniProject2_BPMN_Diagram.png)
+![Business Process Management Notation image](<assets/MiniProject2_BPMN_Diagram.png>)
 
 ## Enterprise Integration Patterns
 
