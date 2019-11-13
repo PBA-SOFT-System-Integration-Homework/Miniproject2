@@ -9,6 +9,7 @@ Assignment: [Link to PDF](https://github.com/datsoftlyngby/soft2019fall-si/blob/
 
 ## System architecture
 ![Weee](<assets/Miniproject2.png>)
+
 *Architecture and simple sequence illustration*
 
 ## Requirements & How to run
