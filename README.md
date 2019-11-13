@@ -7,10 +7,21 @@ Assignment: [Link to PDF](https://github.com/datsoftlyngby/soft2019fall-si/blob/
 - Stanislav Novitski (cph-sn183@cphbusiness.dk) 
 - Alexander Winther Hørsted-Andersen (cph-ah353@cphbusiness.dk)
 
+## System architecture
+![Weee](<assets/Miniproject2.png>)
+<p align="center">
+*Architecture and simple sequence illustration*
+</p>
+
 ## Requirements & How to run
 
-* Node installed
-* Clone the project and run: 'npm install'
+Created in NodeJS
+### Installation
+*Requires NodeJS installed*
+
+```javascript
+npm install
+```
 
 We are running everything locally, except RabbitMQ, so we need some terminals to get this running.
 
@@ -18,11 +29,12 @@ We are running everything locally, except RabbitMQ, so we need some terminals to
 * (TXT data source) Run the server in **/txt-data-server/server.js**: node server.js
 * (The actual car rental service CLI) run the server in **/getDataMOMService/server.js**: node server.js
 * RabbitMQ already runs on www.mathiasbigler.com:15672
+* Main CLI run the program with **root folder**: node main.js
 * (Consumer of bookings) run the server in **/carrentalMOMConsumer/server.js**: node server.js
 
 ## Overview
 
-We have creat a system that uses MOM as an integration platform. Our setup of MOM is done by setting up a
+We have created a system that uses MOM as an integration platform. Our setup of MOM is done by setting up a
 [RabbitMQ](https://www.rabbitmq.com/) server on one of our servers. Specifically on www.mathiasbigler.com:15672.
 
 The RabbitMQ instance runs in a Docker container instantiated
@@ -48,15 +60,11 @@ We have tried to implement, at least, the following Enterprise Integration Patte
 
 - [Request-reply](https://www.enterpriseintegrationpatterns.com/patterns/messaging/RequestReply.html)
     - To transfer of messages between the Client Application and the Car Rental Service
-
 - [Aggregator (slightly)](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html)
     - To collect cars from diffent data sources (json and txt files) and return them as a combined list of cars.
-
 - [Messaging Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html)
     - To send the final booking from the Client to the RabbitMQ server, thus allowing the Car Rental Broker to accept the booking.
-
 - [Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html)
     - To transfer of messages between the Client Application and the Car Rental Broker (Mathias Bigler)
-
 - [Return Address](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ReturnAddress.html)
     - To transfer a message back (through the request-reply pattern) to the correct sender.
