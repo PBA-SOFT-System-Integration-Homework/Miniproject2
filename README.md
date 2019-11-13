@@ -19,7 +19,7 @@ docker run -d -p 15672:15672 -p 5672:5672 -p 5671:5671 --hostname my-rabbitmq --
 ````
 
 ## Business Process
-The general idea behind the process is that a user can define a search criteria which resolves in a response with a list of cars fulfilled by the criteria. The user can then choose a specific car and send a booking to the car rental company.
+The general idea behind the process is that a user can define a search criteria which resolves in a response with a list of cars based on the criteria. The user can then choose a specific car and send a booking to the car rental company.
 
 * The user chooses car make and minimum year of creation of car.
 * The request is sent to car rental service.
