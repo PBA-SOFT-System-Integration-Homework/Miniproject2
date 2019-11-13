@@ -19,9 +19,31 @@ docker run -d -p 15672:15672 -p 5672:5672 -p 5671:5671 --hostname my-rabbitmq --
 ````
 
 ## Business Process
+The general idea behind the process is that a user can define a search criteria which resolves in a response with a list of cars fulfilled by the criteria. The user can then choose a specific car and send a booking to the car rental company.
+
+* The user chooses car make and minimum year of creation of car.
+* The request is sent to car rental service.
+* The service sends a filtered list back to user.
+* The user chooses from returned list, enters booking details, and sends car booking request.
+* Car rental company (Or Mathias Bigler) accepts booking.
 
 ![Business Process Management Notation image](MiniProject2_BPMN_Diagram.png)
 
-## Requirements
-Integration Platform:
-- 
+## Enterprise Integration Patterns
+
+We have tried to implement, at least, the following Enterprise Integration Patterns in the project:
+
+- [Request-reply](https://www.enterpriseintegrationpatterns.com/patterns/messaging/RequestReply.html)
+    - To transfer of messages between the Client Application and the Car Rental Service
+
+- [Aggregator (slightly)](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html)
+    - To collect cars from diffent data sources (json and txt files) and return them as a combined list of cars.
+
+- [Messaging Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessageChannel.html)
+    - To send the final booking from the Client to the RabbitMQ server, thus allowing the Car Rental Broker to accept the booking.
+
+- [Message](https://www.enterpriseintegrationpatterns.com/patterns/messaging/Message.html)
+    - To transfer of messages between the Client Application and the Car Rental Broker (Mathias Bigler)
+
+- [Return Address](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ReturnAddress.html)
+    - To transfer a message back (through the request-reply pattern) to the correct sender.
