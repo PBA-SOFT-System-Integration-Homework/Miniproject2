@@ -14,8 +14,8 @@ Assignment: [Link to PDF](https://github.com/datsoftlyngby/soft2019fall-si/blob/
 
 We are running everything locally, except RabbitMQ, so we need some terminals to get this running.
 
-* (TXT data source) Run the server in **/json-data-server/server.js**: node server.js 
-* (JSON data source) Run the server in **/txt-data-server/server.js**: node server.js
+* (JSON data source) Run the server in **/json-data-server/server.js**: node server.js 
+* (TXT data source) Run the server in **/txt-data-server/server.js**: node server.js
 * (The actual car rental service CLI) run the server in **/getDataMOMService/server.js**: node server.js
 * RabbitMQ already runs on www.mathiasbigler.com:15672
 * (Consumer of bookings) run the server in **/carrentalMOMConsumer/server.js**: node server.js
